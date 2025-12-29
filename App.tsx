@@ -1,24 +1,19 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Snowfall from './components/Snowfall';
 import ScratchReveal from './components/ScratchReveal';
-import ChaletIcon from './components/ChaletIcon';
 import SleepingAnimal from './components/SleepingAnimal';
 import { DayData } from './types';
 import { CALENDAR_DAYS, WEEKDAYS, TARGET_YEAR, TARGET_MONTH, isWeekendOrHoliday } from './constants';
 
 const App: React.FC = () => {
   const [days, setDays] = useState<DayData[]>(CALENDAR_DAYS);
-  const [today] = useState(new Date());
+  // Simulation de la date au 16 Janvier 2026
+  const [todayDate] = useState(16);
+  const [today] = useState(new Date(2026, 0, todayDate));
 
-  const getDayDetails = (dayNum: number) => {
-    const currentYear = today.getFullYear();
-    const currentMonth = today.getMonth();
-    const currentDate = today.getDate();
-
-    if (currentYear > TARGET_YEAR) return true;
-    if (currentYear === TARGET_YEAR && currentMonth > TARGET_MONTH) return true;
-    return currentYear === TARGET_YEAR && currentMonth === TARGET_MONTH && currentDate >= dayNum;
+  const isAvailable = (dayNum: number) => {
+    return dayNum <= todayDate;
   };
 
   const handleReveal = (dayNum: number) => {
@@ -35,8 +30,19 @@ const App: React.FC = () => {
       {/* Hero Section */}
       <header className="relative z-10 w-full max-w-6xl px-8 pt-24 pb-16 text-center flex flex-col items-center">
         <div className="animate-float mb-10">
-           <div className="glass p-8 rounded-[3rem] shadow-xl shadow-blue-500/5">
-             <ChaletIcon size="w-16 h-16" />
+           <div className="glass p-6 rounded-[3rem] shadow-xl shadow-blue-500/5 flex items-center gap-6">
+             <div className="flex items-center">
+                <svg width="180" height="40" viewBox="0 0 450 100" className="h-10 w-auto">
+                   <text x="0" y="70" fontFamily="Arial, sans-serif" fontSize="60" fontWeight="bold" fill="#FBB000">h•me exchange</text>
+                </svg>
+             </div>
+             <div className="h-12 w-[1.5px] bg-slate-200/50" />
+             <div className="flex items-center">
+                <svg width="48" height="48" viewBox="0 0 100 100" className="w-10 h-10">
+                   <rect x="5" y="5" width="90" height="90" rx="15" fill="black" />
+                   <path d="M25 25 L35 25 L70 65 V25 H80 V75 H70 L35 35 V75 H25 V25 Z" fill="white" />
+                </svg>
+             </div>
            </div>
         </div>
         
@@ -57,9 +63,8 @@ const App: React.FC = () => {
         </div>
       </header>
 
-      {/* Calendar Grid Container */}
-      <main className="relative z-10 w-full max-w-7xl px-8 lg:px-16">
-        {/* Strict 7-column header */}
+      {/* Calendar Grid Container - Wide for full screen */}
+      <main className="relative z-10 w-full max-w-[1440px] px-8 lg:px-16">
         <div className="grid grid-cols-7 gap-6 mb-12">
           {WEEKDAYS.map(wd => (
             <div key={wd} className="text-center py-3 border-b-2 border-slate-50">
@@ -68,27 +73,25 @@ const App: React.FC = () => {
           ))}
         </div>
 
-        {/* The 7-column Calendar Grid */}
         <div className="grid grid-cols-7 gap-6">
-          {/* Fill empty leading days */}
           {Array.from({ length: startOffset }).map((_, i) => (
             <div key={`offset-${i}`} className="aspect-square rounded-3xl bg-slate-50/5 border border-slate-50/20" />
           ))}
 
           {days.map((day) => {
-            const available = getDayDetails(day.day);
+            const available = isAvailable(day.day);
             const quietMode = isWeekendOrHoliday(TARGET_YEAR, TARGET_MONTH, day.day);
+            const isToday = day.day === todayDate;
 
             return (
               <div key={day.day} className="flex flex-col gap-4 group">
-                {/* Day Number Label */}
                 <div className="flex items-center justify-between px-3">
                   <span className={`text-[12px] font-black tracking-widest ${available ? 'text-slate-900' : 'text-slate-200'}`}>
                     {day.day.toString().padStart(2, '0')}
                   </span>
                   {available && !quietMode && !day.isUnlocked && (
                     <div className="flex gap-1">
-                      <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-ping" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
                     </div>
                   )}
                 </div>
@@ -98,18 +101,25 @@ const App: React.FC = () => {
                     <SleepingAnimal day={day.day} />
                   </div>
                 ) : (
-                  <ScratchReveal onReveal={() => handleReveal(day.day)} isUnlocked={available}>
-                    <div className="flex flex-col items-center text-center w-full p-2">
-                      <div className="w-14 h-14 mb-6 bg-slate-50 rounded-2xl flex items-center justify-center group-hover:bg-blue-50 transition-colors shadow-inner">
-                        <span className="text-2xl">✨</span>
+                  <ScratchReveal 
+                    onReveal={() => handleReveal(day.day)} 
+                    isUnlocked={available}
+                    isOpened={day.isUnlocked}
+                    isToday={isToday}
+                  >
+                    <div className="flex flex-col items-center text-center w-full">
+                      <div className="w-10 h-10 mb-3 bg-slate-50 rounded-2xl flex items-center justify-center group-hover:bg-blue-50 transition-colors shadow-inner">
+                        <span className="text-lg">✨</span>
                       </div>
-                      <h4 className="text-[14px] font-bold text-[#1d1d1f] mb-3 leading-tight px-3 line-clamp-2">
+                      <h4 className="text-[11px] font-bold text-[#1d1d1f] mb-2 leading-tight px-1 line-clamp-3 min-h-[3rem] flex items-center justify-center">
                         {day.title}
                       </h4>
-                      <p className="text-[9px] text-slate-400 mb-6 uppercase tracking-[0.3em] font-black">Notion AI Skill</p>
                       <button
-                        onClick={() => window.open(day.notionUrl, '_blank')}
-                        className="w-full py-3.5 px-4 bg-[#1d1d1f] hover:bg-black text-white text-[9px] font-black uppercase tracking-[0.25em] rounded-xl transition-all active:scale-[0.98] shadow-lg shadow-black/5"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.open(day.notionUrl, '_blank');
+                        }}
+                        className="w-auto px-4 py-2 bg-[#1d1d1f] hover:bg-black text-white text-[7px] font-black uppercase tracking-[0.2em] rounded-lg transition-all active:scale-[0.98] shadow-lg shadow-black/5 mt-1"
                       >
                         Explore
                       </button>
@@ -122,12 +132,13 @@ const App: React.FC = () => {
         </div>
       </main>
 
-      {/* Elegant Fixed Nav */}
       <footer className="fixed bottom-12 z-50">
         <div className="glass px-10 py-5 rounded-[2.5rem] shadow-2xl flex items-center gap-12 border border-white/50">
           <div className="flex items-center gap-5">
-             <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
-               <span className="text-white font-black text-xl">N</span>
+             <div className="w-10 h-10 rounded-xl bg-black flex items-center justify-center shadow-lg">
+                <svg width="24" height="24" viewBox="0 0 100 100">
+                   <path d="M25 25 L35 25 L70 65 V25 H80 V75 H70 L35 35 V75 H25 V25 Z" fill="white" />
+                </svg>
              </div>
              <div className="flex flex-col">
                 <span className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400">HomeExchange</span>

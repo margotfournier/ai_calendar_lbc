@@ -11,37 +11,27 @@ export const COLORS = {
 };
 
 const NOTION_AI_TIPS = [
-  "Draft a perfect host welcome letter",
-  "Summarize local neighborhood reviews",
-  "Generate unique house rule icons",
-  "Translate your listing to 5 languages",
-  "Brainstorm winter guest gift ideas",
-  "Create an automated check-out list",
-  "Rewrite listing for higher impact",
-  "Analyze guest feedback patterns",
-  "Simplify exchange insurance terms",
-  "Write an enticing property title",
-  "Generate a local 'Secret Spot' guide",
-  "Format a clear house manual",
-  "Suggest nearby winter activities",
-  "Optimize photo descriptions for SEO",
-  "Respond to inquiries with AI tone-matching",
-  "Synthesize calendar availability notes",
-  "Extract flight details from emails",
-  "Build a local eatery comparison table",
-  "Correct listing grammar instantly",
-  "Draft professional exchange contracts",
-  "Summarize regional travel warnings",
-  "Create a packing list for guests",
-  "Brainstorm cleaning protocol steps",
-  "Generate social captions for listings",
-  "Write personalized thank you notes",
-  "Plan exchange-friendly pet rules",
-  "Analyze heating cost efficiency tips",
-  "Draft a bio that builds trust",
-  "Translate emergency contacts lists",
-  "Create a 'First Night' dinner recipe",
-  "Review and polish exchange terms"
+  "Lancement : principes de base et rassurer sur la sécurité",
+  "Enterprise search",
+  "Research mode",
+  "AI Meeting notes",
+  "Exemple - Research mode sur une feature produit",
+  "Ask AI dans un paragraphe",
+  "Notion agent",
+  "Bloc d’IA",
+  "Research mode example - PRD",
+  "Databases: Create & Query",
+  "Databases: Update & pratique",
+  "Personnaliser son Agent Notion",
+  "Comment choisir le bon modèle?",
+  "Notion Agent UC 1: ranger des pages",
+  "Personnalisation Notion Agent 1",
+  "Raccourci clavier de l’IA de Notion",
+  "Notion Agent UC 2: Générer des Epics produit",
+  "Lecture de documents (connecteurs, pdf, image)",
+  "Traduire une page",
+  "Personnalisation Notion Agent 2",
+  "Wrap up: les outils IA chez HE"
 ];
 
 export const TARGET_YEAR = 2026;
@@ -59,6 +49,9 @@ export const CALENDAR_DAYS: DayData[] = Array.from({ length: 31 }, (_, i) => ({
 export const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 export const isWeekendOrHoliday = (year: number, month: number, day: number) => {
+  // Le 1er Janvier est un jour férié
+  if (day === 1 && month === 0) return true;
+  
   const date = new Date(year, month, day);
   const dayOfWeek = date.getDay(); 
   return dayOfWeek === 0 || dayOfWeek === 6; // 0 Sun, 6 Sat

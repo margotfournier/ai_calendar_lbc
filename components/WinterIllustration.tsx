@@ -3,6 +3,7 @@ import React from 'react';
 
 const WinterIllustration: React.FC<{ day: number }> = ({ day }) => {
   const week = Math.ceil(day / 7);
+  const isJanFirst = day === 1;
   
   const skyGradients = {
     night: "url(#nightSky)",
@@ -40,7 +41,6 @@ const WinterIllustration: React.FC<{ day: number }> = ({ day }) => {
             <stop offset="100%" stopColor="#87ceeb" />
           </linearGradient>
 
-          {/* Coucher de soleil multicouche et doux */}
           <linearGradient id="sunsetSky" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#a1c4fd" />
             <stop offset="20%" stopColor="#dcd6f7" />
@@ -65,14 +65,6 @@ const WinterIllustration: React.FC<{ day: number }> = ({ day }) => {
           <filter id="steamBlur">
             <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
           </filter>
-
-          <filter id="noseGlow">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
         </defs>
 
         {/* Ciel en arrière-plan (Fenêtre) */}
@@ -96,137 +88,176 @@ const WinterIllustration: React.FC<{ day: number }> = ({ day }) => {
         {/* Rebord de la fenêtre */}
         <rect x="30" y="165" width="140" height="8" fill="#ffffff" rx="2" />
 
-        {/* SEMAINE 1 : LE CHAT */}
-        {week === 1 && (
-          <g transform="translate(0, 5)">
-            <g className="animate-[steam_3s_infinite]" opacity="0.6" filter="url(#steamBlur)">
-               <path d="M162 135 Q165 120 160 110" stroke="#fff" strokeWidth="3" fill="none" strokeLinecap="round" />
-               <path d="M172 135 Q168 120 174 110" stroke="#fff" strokeWidth="3" fill="none" strokeLinecap="round" />
-            </g>
-            <g className="animate-[breathe_5s_ease-in-out_infinite]">
-              <ellipse cx="100" cy="168" rx="40" ry="4" fill="#000" opacity="0.05" />
-              <path d="M60 160 Q55 185 65 210" stroke="#9b8375" strokeWidth="8" strokeLinecap="round" fill="none" className="animate-[sleepingTail_4s_infinite]" />
-              <path d="M55 165 Q55 125 105 125 Q145 125 150 150 Q150 165 115 165 L65 165 Z" fill="#9b8375" />
-              <circle cx="130" cy="152" r="16" fill="#9b8375" />
-              <path d="M115 145 L110 135 L125 140 Z" fill="#9b8375" />
-              <path d="M140 145 L145 135 L130 140 Z" fill="#9b8375" />
-              <g stroke="#3e2b20" strokeWidth="1" fill="none" opacity="0.6">
-                <path d="M124 154 Q128 157 132 154" />
-                <path d="M136 154 Q140 157 144 154" />
-              </g>
-            </g>
-          </g>
-        )}
-
-        {/* SEMAINE 2 : LE CHIEN */}
-        {week === 2 && (
-          <g>
-            <path d="M60 210 Q60 175 100 175 Q140 175 140 210 L140 230 Q100 240 60 230 Z" fill="#d35400" opacity="0.9" />
-            <g transform="translate(0, 5)">
-              <path d="M75 190 Q75 140 100 140 Q125 140 125 190 Q125 210 100 210 Q75 210 75 190" fill="#f8f8f2" />
-              <ellipse cx="105" cy="195" rx="12" ry="8" fill="#333" opacity="0.8" />
-              <path d="M85 145 Q85 125 100 125 Q115 125 115 145 Z" fill="#f8f8f2" />
-              <path d="M100 210 Q100 225 105 220" stroke="#f8f8f2" strokeWidth="6" strokeLinecap="round" fill="none" className="animate-[wag_2s_ease-in-out_infinite]" />
-            </g>
-          </g>
-        )}
-
-        {/* SEMAINE 3 : LE LAPIN */}
-        {week === 3 && (
-          <g transform="translate(10, 0)">
-            <path d="M60 215 Q60 190 80 190 Q100 190 100 215 Q100 225 80 225 Q60 225 60 215" fill="#c4a484" />
-            <circle cx="62" cy="218" r="5" fill="#fff" className="animate-[tailFlick_0.6s_infinite]" />
-            <g transform="translate(95, 190)" className="animate-[munchMunch_0.25s_infinite]">
-              <circle cx="0" cy="0" r="19" fill="#c4a484" />
-              <circle cx="12" cy="4" r="6" fill="#ffb7b7" opacity="0.4" filter="url(#watercolor)" />
-              <g className="animate-[earWiggle_1.2s_infinite]">
-                <path d="M-6 -15 Q-15 -45 -3 -42 L6 -15" fill="#c4a484" />
-                <path d="M6 -15 Q15 -45 24 -42 L12 -15" fill="#c4a484" />
-              </g>
-              <g stroke="#333" strokeWidth="1.8" fill="none" strokeLinecap="round">
-                <path d="M8 -5 Q11 -9 14 -5" />
-                <path d="M1 -5 Q4 -9 7 -5" />
-              </g>
-              <g transform="translate(14, 12) rotate(-8)">
-                <path d="M0 0 L30 6 L0 14 Z" fill="#e67e22" />
-                <path d="M-2 2 L-18 -2 M-2 7 L-18 7 M-2 12 L-18 16" stroke="#27ae60" strokeWidth="3" strokeLinecap="round" />
-              </g>
-            </g>
-          </g>
-        )}
-
-        {/* SEMAINE 4 : LE CACATOÈS */}
-        {week === 4 && (
-          <g transform="translate(100, 30)" className="animate-[parrotSwing_3.5s_ease-in-out_infinite]" filter="url(#birdGlow)">
-            <g stroke="#8d6e63" strokeWidth="1.2" opacity="0.4">
-              <line x1="-25" y1="0" x2="-20" y2="120" />
-              <line x1="25" y1="0" x2="20" y2="120" />
-            </g>
-            <rect x="-26" y="120" width="52" height="5" fill="#5d4037" rx="2" />
-            <g transform="translate(0, 120)">
-               <g stroke="#7f8c8d" strokeWidth="2.5" strokeLinecap="round">
-                 <line x1="-5" y1="0" x2="-3" y2="-8" />
-                 <line x1="5" y1="0" x2="3" y2="-8" />
-               </g>
-               <path d="M0 0 L-8 35 L8 35 Z" fill="#ffffff" />
-               <path d="M0 5 L-5 30 L5 30 Z" fill="#fff9c4" opacity="0.6" />
-               <ellipse cx="0" cy="-25" rx="14" ry="24" fill="#ffffff" />
-               <path d="M-13 -35 Q-18 -25 -13 -10 Q-8 -25 -13 -35" fill="#f5f5f5" />
-               <path d="M13 -35 Q18 -25 13 -10 Q8 -25 13 -35" fill="#f5f5f5" />
-               <g transform="translate(0, -45)">
-                 <g className="animate-[earWiggle_2s_infinite]">
-                   <path d="M-2 -10 Q-10 -30 2 -28 Q-2 -22 2 -10" fill="#fdd835" />
-                   <path d="M2 -10 Q10 -35 15 -25 Q8 -20 2 -10" fill="#fdd835" />
-                   <path d="M5 -5 Q15 -20 18 -10 Q10 -10 5 -5" fill="#fdd835" />
-                 </g>
-                 <circle cx="0" cy="0" r="15" fill="#ffffff" />
-                 <circle cx="6" cy="-2" r="2.5" fill="#2c3e50" />
-                 <circle cx="7" cy="-3" r="0.8" fill="#ffffff" />
-                 <path d="M10 2 Q22 2 15 12 Q10 14 10 5 Z" fill="#34495e" />
-                 <circle cx="6" cy="6" r="3" fill="#ffcdd2" opacity="0.3" filter="url(#watercolor)" />
-               </g>
-            </g>
-          </g>
-        )}
-
-        {/* SEMAINE 5 : LE RENNE AU NEZ ROUGE */}
-        {week >= 5 && (
-          <g transform="translate(100, 165)">
-            <g className="animate-[breathe_6s_infinite]">
-              {/* Corps */}
-              <path d="M-35 0 Q-35 -40 0 -40 Q35 -40 35 0 Z" fill="#8d6e63" />
-              
-              {/* Tête */}
-              <g transform="translate(0, -35)">
-                {/* Bois */}
-                <g stroke="#5d4037" strokeWidth="3" strokeLinecap="round" fill="none">
-                  <path d="M-8 -15 Q-15 -35 -25 -30 M-12 -25 Q-20 -35 -15 -45" />
-                  <path d="M8 -15 Q15 -35 25 -30 M12 -25 Q20 -35 15 -45" />
+        {/* ANIMAUX (Ignorés si c'est le 1er Janvier) */}
+        {!isJanFirst && (
+          <>
+            {/* SEMAINE 1 : LE CHAT */}
+            {week === 1 && (
+              <g transform="translate(0, 5)">
+                <g className="animate-[steam_3s_infinite]" opacity="0.6" filter="url(#steamBlur)">
+                  <path d="M162 135 Q165 120 160 110" stroke="#fff" strokeWidth="3" fill="none" strokeLinecap="round" />
+                  <path d="M172 135 Q168 120 174 110" stroke="#fff" strokeWidth="3" fill="none" strokeLinecap="round" />
                 </g>
-                
-                <ellipse cx="0" cy="0" rx="22" ry="25" fill="#8d6e63" />
-                <ellipse cx="0" cy="8" rx="16" ry="12" fill="#a1887f" opacity="0.6" />
-                
-                {/* Yeux */}
-                <circle cx="-7" cy="-4" r="2" fill="#2c3e50" />
-                <circle cx="7" cy="-4" r="2" fill="#2c3e50" />
-                
-                {/* NEZ ROUGE CLIGNOTANT */}
-                <g className="animate-[noseBlink_2s_infinite]" filter="url(#noseGlow)">
-                  <circle cx="0" cy="10" r="6" fill="#e53935" />
-                  <circle cx="2" cy="8" r="1.5" fill="white" opacity="0.6" />
+                <g className="animate-[breathe_5s_ease-in-out_infinite]">
+                  <ellipse cx="100" cy="168" rx="40" ry="4" fill="#000" opacity="0.05" />
+                  <path d="M60 160 Q55 185 65 210" stroke="#9b8375" strokeWidth="8" strokeLinecap="round" fill="none" className="animate-[sleepingTail_4s_infinite]" />
+                  <path d="M55 165 Q55 125 105 125 Q145 125 150 150 Q150 165 115 165 L65 165 Z" fill="#9b8375" />
+                  
+                  {/* Oreilles dessinées en premier avec contour, sans le trait du bas */}
+                  <path d="M115 138 L112 125 L126 138" fill="#9b8375" stroke="#1d1d1f" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M145 138 L148 125 L134 138" fill="#9b8375" stroke="#1d1d1f" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round" />
+                  
+                  {/* Tête par-dessus pour cacher le raccord */}
+                  <circle cx="130" cy="152" r="16" fill="#9b8375" />
+                  
+                  <g stroke="#3e2b20" strokeWidth="1" fill="none" opacity="0.6">
+                    <path d="M124 154 Q128 157 132 154" />
+                    <path d="M136 154 Q140 157 144 154" />
+                  </g>
                 </g>
               </g>
-            </g>
-          </g>
-        )}
+            )}
 
-        {/* Tasse (S1 & S2 uniquement) */}
-        {week <= 2 && (
-          <g transform="translate(155, 155) scale(0.65)">
-             <path d="M0 0 H18 Q22 0 22 4 V18 Q22 22 18 22 H0 V0" fill={week === 1 ? "#ae2b20" : "#2980b9"} />
-             <path d="M22 5 Q30 5 30 11 Q30 17 22 17" stroke={week === 1 ? "#ae2b20" : "#2980b9"} strokeWidth="3" fill="none" />
-          </g>
+            {/* SEMAINE 2 : LE CHIEN */}
+            {week === 2 && (
+              <g>
+                {/* Tâche orange sur le corps */}
+                <path d="M60 210 Q60 175 100 175 Q140 175 140 210 L140 230 Q100 240 60 230 Z" fill="#d35400" opacity="0.9" />
+                <g transform="translate(0, 5)">
+                  {/* Oreilles remontées en haut du crâne, même couleur que la tâche */}
+                  <path d="M92 130 Q82 125 80 150" stroke="#d35400" strokeWidth="6" strokeLinecap="round" fill="none" />
+                  <path d="M108 130 Q118 125 120 150" stroke="#d35400" strokeWidth="6" strokeLinecap="round" fill="none" />
+                  
+                  <path d="M75 190 Q75 140 100 140 Q125 140 125 190 Q125 210 100 210 Q75 210 75 190" fill="#f8f8f2" />
+                  <ellipse cx="105" cy="195" rx="12" ry="8" fill="#333" opacity="0.8" />
+                  <path d="M85 145 Q85 125 100 125 Q115 125 115 145 Z" fill="#f8f8f2" />
+                  <path d="M100 210 Q100 225 105 220" stroke="#f8f8f2" strokeWidth="6" strokeLinecap="round" fill="none" className="animate-[wag_1.5s_ease-in-out_infinite]" style={{ transformOrigin: '100px 210px' }} />
+                </g>
+              </g>
+            )}
+
+            {/* SEMAINE 3 : LE LAPIN */}
+            {week === 3 && (
+              <g transform="translate(10, 0)">
+                <path d="M60 215 Q60 190 80 190 Q100 190 100 215 Q100 225 80 225 Q60 225 60 215" fill="#c4a484" />
+                <circle cx="62" cy="218" r="5" fill="#fff" className="animate-[tailFlick_1.8s_infinite]" />
+                <g transform="translate(95, 190)" className="animate-[munchMunch_0.25s_infinite]">
+                  <circle cx="0" cy="0" r="19" fill="#c4a484" />
+                  <circle cx="12" cy="4" r="6" fill="#ffb7b7" opacity="0.4" filter="url(#watercolor)" />
+                  <g className="animate-[earWiggle_1.2s_infinite]">
+                    <path d="M-6 -15 Q-15 -45 -3 -42 L6 -15" fill="#c4a484" />
+                    <path d="M6 -15 Q15 -45 24 -42 L12 -15" fill="#c4a484" />
+                  </g>
+                  <g stroke="#333" strokeWidth="1.8" fill="none" strokeLinecap="round">
+                    <path d="M8 -5 Q11 -9 14 -5" />
+                    <path d="M1 -5 Q4 -9 7 -5" />
+                  </g>
+                  <g transform="translate(14, 12) rotate(-8)">
+                    <path d="M0 0 L30 6 L0 14 Z" fill="#e67e22" />
+                    <path d="M-2 2 L-18 -2 M-2 7 L-18 7 M-2 12 L-18 16" stroke="#27ae60" strokeWidth="3" strokeLinecap="round" />
+                  </g>
+                </g>
+              </g>
+            )}
+
+            {/* SEMAINE 4 : LE CACATOÈS */}
+            {week === 4 && (
+              <g transform="translate(100, 30)" className="animate-[parrotSwing_3.5s_ease-in-out_infinite]" filter="url(#birdGlow)">
+                <g stroke="#8d6e63" strokeWidth="1.2" opacity="0.4">
+                  <line x1="-25" y1="0" x2="-20" y2="120" />
+                  <line x1="25" y1="0" x2="20" y2="120" />
+                </g>
+                <rect x="-26" y="120" width="52" height="5" fill="#5d4037" rx="2" />
+                <g transform="translate(0, 120)">
+                  <g stroke="#7f8c8d" strokeWidth="2.5" strokeLinecap="round">
+                    <line x1="-5" y1="0" x2="-3" y2="-8" />
+                    <line x1="5" y1="0" x2="3" y2="-8" />
+                  </g>
+                  <path d="M0 0 L-8 35 L8 35 Z" fill="#ffffff" />
+                  <path d="M0 5 L-5 30 L5 30 Z" fill="#fff9c4" opacity="0.6" />
+                  <ellipse cx="0" cy="-25" rx="14" ry="24" fill="#ffffff" />
+                  <path d="M-13 -35 Q-18 -25 -13 -10 Q-8 -25 -13 -35" fill="#f5f5f5" />
+                  <path d="M13 -35 Q18 -25 13 -10 Q8 -25 13 -35" fill="#f5f5f5" />
+                  <g transform="translate(0, -45)">
+                    <g className="animate-[earWiggle_2s_infinite]">
+                      <path d="M-2 -10 Q-10 -30 2 -28 Q-2 -22 2 -10" fill="#fdd835" />
+                      <path d="M2 -10 Q10 -35 15 -25 Q8 -20 2 -10" fill="#fdd835" />
+                      <path d="M5 -5 Q15 -20 18 -10 Q10 -10 5 -5" fill="#fdd835" />
+                    </g>
+                    <circle cx="0" cy="0" r="15" fill="#ffffff" />
+                    <circle cx="6" cy="-2" r="2.5" fill="#2c3e50" />
+                    <circle cx="7" cy="-3" r="0.8" fill="#ffffff" />
+                    <path d="M10 2 Q22 2 15 12 Q10 14 10 5 Z" fill="#34495e" />
+                    <circle cx="6" cy="6" r="3" fill="#ffcdd2" opacity="0.3" filter="url(#watercolor)" />
+                  </g>
+                </g>
+              </g>
+            )}
+
+            {/* SEMAINE 5 : LE HAMSTER */}
+            {week >= 5 && (
+              <g transform="translate(100, 165)">
+                <g className="animate-[breathe_4s_infinite]">
+                  <path 
+                    d="M-5 -8 Q-10 20 -5 50 Q0 80 -10 110" 
+                    stroke="#64b5f6" 
+                    strokeWidth="10" 
+                    fill="none" 
+                    strokeLinecap="round" 
+                    className="animate-[sleepingTail_6s_infinite]"
+                  />
+                  <path 
+                    d="M-5 -8 Q-10 20 -5 50 Q0 80 -10 110" 
+                    stroke="#4db6ac" 
+                    strokeWidth="6" 
+                    fill="none" 
+                    strokeLinecap="round" 
+                    strokeDasharray="4 4"
+                    className="animate-[sleepingTail_6s_infinite]"
+                  />
+
+                  <ellipse cx="0" cy="-15" rx="25" ry="22" fill="#ffffff" />
+                  <path d="M-15 -32 Q0 -35 15 -32 Q25 -20 20 0 L-20 0 Q-25 -20 -15 -32" fill="#ffb74d" opacity="0.8" />
+                  <circle cx="-18" cy="-30" r="6" fill="#ffb74d" />
+                  <circle cx="18" cy="-30" r="6" fill="#ffb74d" />
+                  <ellipse cx="0" cy="-10" rx="15" ry="12" fill="#ffffff" />
+                  <circle cx="-7" cy="-20" r="2" fill="#2c3e50" />
+                  <circle cx="7" cy="-20" r="2" fill="#2c3e50" />
+                  <circle cx="0" cy="-17" r="2.5" fill="#f48fb1" opacity="0.8" />
+
+                  <g transform="translate(0, -5)">
+                    <path d="M-10 0 Q0 12 10 0" stroke="#64b5f6" strokeWidth="10" fill="none" strokeLinecap="round" />
+                    <g>
+                      <line 
+                        x1="-25" y1="-12" x2="10" y2="10" 
+                        stroke="#bdc3c7" strokeWidth="2" strokeLinecap="round" 
+                        className="animate-[knittingLeft_0.6s_infinite]" 
+                      />
+                      <line 
+                        x1="25" y1="-12" x2="-10" y2="10" 
+                        stroke="#bdc3c7" strokeWidth="2" strokeLinecap="round" 
+                        className="animate-[knittingRight_0.6s_infinite]" 
+                      />
+                    </g>
+                    <circle cx="-12" cy="-2" r="4" fill="#ffffff" stroke="#ffb74d" strokeWidth="0.5" />
+                    <circle cx="12" cy="-2" r="4" fill="#ffffff" stroke="#ffb74d" strokeWidth="0.5" />
+                  </g>
+                </g>
+              </g>
+            )}
+
+            {/* Tasse (S1, S2 & S5) */}
+            {(week <= 2 || week === 5) && (
+              <g transform="translate(155, 155) scale(0.65)">
+                <g className="animate-[steam_3s_infinite]" opacity="0.6" filter="url(#steamBlur)">
+                  <path d="M8 -10 Q12 -20 8 -30" stroke="#fff" strokeWidth="2" fill="none" strokeLinecap="round" />
+                  <path d="M15 -10 Q12 -20 15 -30" stroke="#fff" strokeWidth="2" fill="none" strokeLinecap="round" />
+                </g>
+                <path d="M0 0 H18 Q22 0 22 4 V18 Q22 22 18 22 H0 V0" fill={week === 1 ? "#ae2b20" : week === 5 ? "#ffb74d" : "#2980b9"} />
+                <path d="M22 5 Q30 5 30 11 Q30 17 22 17" stroke={week === 1 ? "#ae2b20" : week === 5 ? "#ffb74d" : "#2980b9"} strokeWidth="3" fill="none" />
+              </g>
+            )}
+          </>
         )}
       </svg>
 
@@ -241,8 +272,8 @@ const WinterIllustration: React.FC<{ day: number }> = ({ day }) => {
           100% { transform: translateY(-28px) scale(1.4); opacity: 0; }
         }
         @keyframes sleepingTail {
-          0%, 100% { transform: rotate(-5deg); }
-          50% { transform: rotate(5deg); }
+          0%, 100% { transform: rotate(-3deg); }
+          50% { transform: rotate(3deg); }
         }
         @keyframes munchMunch {
           0%, 100% { transform: translate(95px, 190px) rotate(0deg); }
@@ -257,16 +288,20 @@ const WinterIllustration: React.FC<{ day: number }> = ({ day }) => {
           50% { transform: scale(1.2) translateX(-1px); }
         }
         @keyframes wag {
-          0%, 100% { transform: rotate(0deg); }
-          50% { transform: rotate(15deg); }
+          0%, 100% { transform: rotate(-12deg); }
+          50% { transform: rotate(12deg); }
         }
         @keyframes parrotSwing {
           0%, 100% { transform: translate(100px, 30px) rotate(-10deg); }
           50% { transform: translate(100px, 30px) rotate(10deg); }
         }
-        @keyframes noseBlink {
-          0%, 100% { opacity: 1; filter: drop-shadow(0 0 2px red); }
-          50% { opacity: 0.7; filter: drop-shadow(0 0 10px red); }
+        @keyframes knittingLeft {
+          0%, 100% { transform: rotate(0deg) translate(0, 0); }
+          50% { transform: rotate(-10deg) translate(-2px, -2px); }
+        }
+        @keyframes knittingRight {
+          0%, 100% { transform: rotate(0deg) translate(0, 0); }
+          50% { transform: rotate(10deg) translate(2px, -2px); }
         }
       `}} />
     </div>
