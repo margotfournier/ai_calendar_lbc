@@ -47,46 +47,7 @@ const ScratchReveal: React.FC<ScratchRevealProps> = ({ onReveal, isUnlocked, isO
   // Seuil de révélation (60% de la surface grattée - nécessite plus de grattage)
   const REVEAL_THRESHOLD = 80;
 
-  // Fonction pour jouer un son élégant de révélation
-  const playRevealSound = () => {
-    try {
-      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-      
-      // Créer un son harmonieux avec plusieurs fréquences
-      const frequencies = [523.25, 659.25, 783.99]; // Do, Mi, Sol (accord majeur)
-      const duration = 0.6;
-      const startTime = audioContext.currentTime;
-      
-      frequencies.forEach((freq, index) => {
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-        
-        oscillator.frequency.value = freq;
-        oscillator.type = 'sine'; // Son doux et pur
-        
-        // Enveloppe ADSR pour un son élégant
-        const attackTime = 0.05;
-        const decayTime = 0.1;
-        const sustainLevel = 0.3;
-        const releaseTime = 0.3;
-        
-        gainNode.gain.setValueAtTime(0, startTime);
-        gainNode.gain.linearRampToValueAtTime(0.15 - index * 0.03, startTime + attackTime);
-        gainNode.gain.linearRampToValueAtTime(sustainLevel - index * 0.05, startTime + attackTime + decayTime);
-        gainNode.gain.setValueAtTime(sustainLevel - index * 0.05, startTime + duration - releaseTime);
-        gainNode.gain.linearRampToValueAtTime(0, startTime + duration);
-        
-        oscillator.start(startTime + index * 0.05); // Légèrement décalé pour un effet de cascade
-        oscillator.stop(startTime + duration);
-      });
-    } catch (error) {
-      // Silencieusement ignorer les erreurs (navigateur ne supporte pas l'audio, etc.)
-      console.debug('Audio not available');
-    }
-  };
+  // Audio feedback removed as requested (no frequencies played).
 
   // Initialiser le canvas
   const initCanvas = () => {
@@ -119,7 +80,68 @@ const ScratchReveal: React.FC<ScratchRevealProps> = ({ onReveal, isUnlocked, isO
     ctx.fillStyle = frostGradient;
     ctx.fillRect(0, 0, rect.width, rect.height);
 
+    // Dessiner des 'taches' de givre plus larges pour que la texture soit bien visible sur de grandes cases
+    const frostCount = Math.max(12, Math.floor((rect.width * rect.height) / 18000));
+    ctx.save();
+    ctx.globalCompositeOperation = 'source-over';
+    for (let i = 0; i < frostCount; i++) {
+      const fx = Math.random() * rect.width;
+      const fy = Math.random() * rect.height;
+      const radius = 6 + Math.random() * Math.min(rect.width, rect.height) * 0.06; // taches plus grandes
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(255,255,255,${0.08 + Math.random() * 0.12})`;
+      ctx.filter = `blur(${2 + Math.random() * 4}px)`;
+      ctx.arc(fx, fy, radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.filter = 'none';
+    ctx.restore();
+
     isInitializedRef.current = true;
+  };
+
+  // small festive chime: short arpeggio using WebAudio
+  const playFestiveChime = () => {
+    try {
+      const AudioCtx = (window.AudioContext || (window as any).webkitAudioContext);
+      if (!AudioCtx) return;
+      const ctx = new AudioCtx();
+      const now = ctx.currentTime;
+      const freqs = [523.25, 659.25, 783.99]; // quick C major arpeggio (C5, E5, G5)
+      const baseGain = ctx.createGain();
+      baseGain.gain.value = 0.0001; // start near 0 to avoid click
+      baseGain.connect(ctx.destination);
+
+      freqs.forEach((f, i) => {
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.value = f;
+        osc.connect(g);
+        g.connect(baseGain);
+        const t0 = now + i * 0.07;
+        const dur = 0.28;
+        g.gain.setValueAtTime(0, t0);
+        g.gain.linearRampToValueAtTime(0.08, t0 + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.001, t0 + dur);
+        osc.start(t0);
+        osc.stop(t0 + dur + 0.02);
+      });
+
+      // ramp master gain to audible and then fade
+      baseGain.gain.cancelScheduledValues(now);
+      baseGain.gain.setValueAtTime(0.0001, now);
+      baseGain.gain.linearRampToValueAtTime(0.12, now + 0.02);
+      baseGain.gain.linearRampToValueAtTime(0.0001, now + 0.9);
+
+      // close context after a short time to free resources
+      setTimeout(() => {
+        try { ctx.close(); } catch (e) { /* ignore */ }
+      }, 1200);
+    } catch (e) {
+      // ignore audio errors
+      console.debug('audio not available');
+    }
   };
 
   // Fonction pour calculer le pourcentage gratté
@@ -163,7 +185,7 @@ const ScratchReveal: React.FC<ScratchRevealProps> = ({ onReveal, isUnlocked, isO
     // Vérifier le pourcentage gratté périodiquement (pas à chaque scratch pour performance)
     if (Math.random() < 0.15) { // 15% de chance de vérifier (plus fréquent pour meilleure réactivité)
       const percentage = calculateScratchedPercentage();
-      if (percentage >= REVEAL_THRESHOLD && !localOpened) {
+        if (percentage >= REVEAL_THRESHOLD && !localOpened) {
         // Déclencher l'effet wahou !
         setShowWowEffect(true);
         setLocalOpened(true);
@@ -171,8 +193,12 @@ const ScratchReveal: React.FC<ScratchRevealProps> = ({ onReveal, isUnlocked, isO
         isScratchingRef.current = false;
         setIsScratching(false);
         
-        // Jouer le son de révélation
-        playRevealSound();
+        // play a short festive chime on reveal
+        try {
+          playFestiveChime();
+        } catch (e) {
+          // ignore
+        }
         
         // Arrêter l'effet après l'animation
         setTimeout(() => {

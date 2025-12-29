@@ -19,6 +19,8 @@ const WinterIllustration: React.FC<{ day: number }> = ({ day }) => {
     week === 3 ? skyGradients.midday : 
     week === 4 ? skyGradients.sunset : skyGradients.daylight;
 
+  const showFireworks = isJanFirst && (week === 1 || week === 5);
+
   return (
     <div className="relative w-full h-full flex items-center justify-center bg-[#fafaf8] overflow-hidden">
       {/* Texture papier grainée */}
@@ -67,8 +69,8 @@ const WinterIllustration: React.FC<{ day: number }> = ({ day }) => {
           </filter>
         </defs>
 
-        {/* Ciel en arrière-plan (Fenêtre) */}
-        <path d="M45 165 L45 70 Q45 30 100 30 Q155 30 155 70 L155 165 Z" fill={currentSky} filter="url(#watercolor)" />
+  {/* Ciel en arrière-plan (Fenêtre) */}
+  <path d="M45 165 L45 70 Q45 30 100 30 Q155 30 155 70 L155 165 Z" fill={currentSky} filter="url(#watercolor)" />
         
         {/* Détails célestes décoratifs (Nuit) */}
         {(week === 1 || week === 5) && (
@@ -77,6 +79,36 @@ const WinterIllustration: React.FC<{ day: number }> = ({ day }) => {
             <circle cx="125" cy="45" r="1.5" fill="white" />
             <circle cx="100" cy="40" r="0.8" fill="white" />
             <circle cx="140" cy="80" r="1" fill="white" />
+          </g>
+        )}
+
+        {/* Feux d'artifice : rendus à l'intérieur du SVG - derrière le cadre pour être "à l'extérieur" */}
+        {showFireworks && (
+          <g className="fireworks" opacity="1">
+            {/* Trois explosions colorées, positionnées plus bas dans le ciel pour être bien visibles */}
+            <g>
+              <circle className="fw-bloom" cx="80" cy="78" r="2" fill="#FF5F6D" style={{ animationDelay: '0s' }} />
+              <circle className="fw-bloom" cx="100" cy="70" r="2" fill="#FFD166" style={{ animationDelay: '0.25s' }} />
+              <circle className="fw-bloom" cx="130" cy="82" r="2" fill="#60A5FA" style={{ animationDelay: '0.5s' }} />
+
+              {/* Sparks: petits cercles qui apparaissent et s'estompent ; positionnés autour des blooms */}
+              {Array.from({ length: 14 }).map((_, i) => {
+                const baseX = i % 2 === 0 ? 80 : 100;
+                const baseY = i % 3 === 0 ? 78 : (i % 3 === 1 ? 70 : 82);
+                const jitter = (i - 7) * 4;
+                return (
+                  <circle
+                    key={i}
+                    className="fw-spark"
+                    cx={baseX + jitter * 0.6}
+                    cy={baseY - Math.abs(jitter) * 0.18}
+                    r={1.2}
+                    fill={i % 3 === 0 ? '#fff' : (i % 3 === 1 ? '#FFD166' : '#60A5FA')}
+                    style={{ animationDelay: `${0.04 * i}s` } as React.CSSProperties}
+                  />
+                );
+              })}
+            </g>
           </g>
         )}
 
@@ -302,6 +334,31 @@ const WinterIllustration: React.FC<{ day: number }> = ({ day }) => {
         @keyframes knittingRight {
           0%, 100% { transform: rotate(0deg) translate(0, 0); }
           50% { transform: rotate(10deg) translate(2px, -2px); }
+        }
+        /* Fireworks animations for SVG blooms and sparks */
+        .fw-bloom {
+          transform-origin: center;
+          transform-box: fill-box;
+          opacity: 0;
+          animation: fw-bloom 1.6s cubic-bezier(.2,.8,.2,1) infinite;
+        }
+        @keyframes fw-bloom {
+          0% { transform: scale(0.2); opacity: 0; }
+          15% { opacity: 1; transform: scale(1.1); }
+          50% { opacity: 0.9; transform: scale(0.9); }
+          100% { opacity: 0; transform: scale(1.6); }
+        }
+
+        .fw-spark {
+          transform-origin: center;
+          transform-box: fill-box;
+          opacity: 0;
+          animation: fw-spark 1.2s ease-out infinite;
+        }
+        @keyframes fw-spark {
+          0% { transform: translate(0,0) scale(0.6); opacity: 0; }
+          10% { opacity: 1; }
+          100% { transform: translate(0,-14px) scale(0.6); opacity: 0; }
         }
       `}} />
     </div>

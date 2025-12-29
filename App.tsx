@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Snowfall from './components/Snowfall';
 import ScratchReveal from './components/ScratchReveal';
 import SleepingAnimal from './components/SleepingAnimal';
@@ -22,6 +22,71 @@ const App: React.FC = () => {
 
   const firstDayOfMonth = new Date(TARGET_YEAR, TARGET_MONTH, 1);
   const startOffset = (firstDayOfMonth.getDay() + 6) % 7; 
+
+  // Charger le mapping YAML /days.yml (public) si présent pour remplacer title/url par jour
+  useEffect(() => {
+    let cancelled = false;
+    const parseDaysYAML = (text: string) => {
+      // simple YAML-ish parser: extract top-level year/month and list of day items
+      const lines = text.split(/\r?\n/).map(l => l.replace(/^\s+|\s+$/g, ''));
+      let yamlYear: number | null = null;
+      let yamlMonth: number | null = null;
+      const items: { id?: number; title?: string; url?: string }[] = [];
+      let current: { id?: number; title?: string; url?: string } | null = null;
+
+      for (const raw of lines) {
+        if (!raw) continue;
+        const mYear = raw.match(/^year:\s*(\d+)/i);
+        if (mYear) { yamlYear = Number(mYear[1]); continue; }
+        const mMonth = raw.match(/^month:\s*(\d+)/i);
+        if (mMonth) { yamlMonth = Number(mMonth[1]); continue; }
+
+        if (raw.startsWith('-')) {
+          if (current && current.id) items.push(current);
+          current = {};
+          const m = raw.match(/-\s*id:\s*(\d+)/);
+          if (m) current.id = Number(m[1]);
+        } else if (current) {
+          const mId = raw.match(/^id:\s*(\d+)/);
+          if (mId) { current.id = Number(mId[1]); continue; }
+          const mTitle = raw.match(/^title:\s*(".*"|'.*'|.+)$/);
+          if (mTitle) { current.title = mTitle[1].replace(/^['"]|['"]$/g, ''); continue; }
+          const mUrl = raw.match(/^url:\s*(".*"|'.*'|.+)$/);
+          if (mUrl) { current.url = mUrl[1].replace(/^['"]|['"]$/g, ''); continue; }
+        }
+      }
+      if (current && current.id) items.push(current);
+      const map: Record<number, { title?: string; url?: string }> = {};
+      for (const it of items) if (it.id) map[it.id] = { title: it.title, url: it.url };
+      return { year: yamlYear, month: yamlMonth, map };
+    };
+
+    fetch('/days.yml').then(res => {
+      if (!res.ok) throw new Error('no yaml');
+      return res.text();
+    }).then(text => {
+      if (cancelled) return;
+      try {
+        const parsed = parseDaysYAML(text);
+        // YAML month is 1-based in file; TARGET_MONTH is 0-based
+        if (parsed.year === TARGET_YEAR && (parsed.month === null || parsed.month - 1 === TARGET_MONTH)) {
+          setDays(prev => prev.map(d => ({
+            ...d,
+            title: parsed.map[d.day]?.title || d.title,
+            notionUrl: parsed.map[d.day]?.url || d.notionUrl
+          })));
+        } else {
+          console.debug('days.yml year/month mismatch; not applying mapping');
+        }
+      } catch (e) {
+        console.debug('days.yml parse failed', e);
+      }
+    }).catch(() => {
+      // no days.yml — ignore
+    });
+
+    return () => { cancelled = true; };
+  }, []);
 
   return (
     <div className="min-h-screen relative flex flex-col items-center pb-48">
@@ -117,9 +182,11 @@ const App: React.FC = () => {
                       <h4 className={`text-[14px] font-bold ${textColor} mb-2 leading-tight px-1 line-clamp-3 min-h-[3rem] flex items-center justify-center`}>
                         {day.title}
                       </h4>
+                      {/* (no music icon) */}
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
+                          // Ouvrir une URL spécifique au jour de la semaine si nécessaire
                           window.open(day.notionUrl, '_blank');
                         }}
                         className={`w-auto px-4 py-2 ${isNight ? 'bg-white/20 hover:bg-white/30 text-white border border-white/30' : 'bg-[#1d1d1f] hover:bg-black text-white'} text-[9px] font-black uppercase tracking-[0.2em] rounded-lg transition-all active:scale-[0.98] shadow-lg shadow-black/5 mt-1`}

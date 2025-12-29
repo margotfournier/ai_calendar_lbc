@@ -47,6 +47,8 @@ export const CALENDAR_DAYS: DayData[] = Array.from({ length: 31 }, (_, i) => ({
 }));
 
 export const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+// Les métadonnées musicales et les URLs par weekday ont été retirées.
+// Utilisez `public/days.yml` pour mapper chaque jour (id) -> { title, url }.
 
 export const isWeekendOrHoliday = (year: number, month: number, day: number) => {
   // Le 1er Janvier est un jour férié
