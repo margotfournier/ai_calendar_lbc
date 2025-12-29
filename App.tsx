@@ -169,7 +169,7 @@ const App: React.FC = () => {
           {new Date(targetYear, targetMonth).toLocaleString(undefined, { month: 'long' })} <span className="text-blue-600 font-extralight italic">{targetYear}</span>
           </h1>
           <p className="text-[#86868b] text-xl font-light max-w-2xl mx-auto pt-6 leading-relaxed">
-            Un calendrier de l'après pour découvrir les features de Notion AI un peu tous les jours.
+            An after-calendar to discover Notion AI features a little every day.
             <br />
           </p>
         </div>

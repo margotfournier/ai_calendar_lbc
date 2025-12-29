@@ -303,7 +303,7 @@ const ScratchReveal: React.FC<ScratchRevealProps> = ({ onReveal, isUnlocked, isO
       {isToday && isUnlocked && !localOpened && !isScratching && (
         <div className="absolute -top-10 left-0 right-0 z-30 flex items-center justify-center pointer-events-none">
           <span className="bg-white/90 backdrop-blur-md px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] text-blue-600 shadow-lg border-2 border-blue-200/50">
-            Grattez
+            Scratch
           </span>
         </div>
       )}
@@ -578,16 +578,7 @@ const ScratchReveal: React.FC<ScratchRevealProps> = ({ onReveal, isUnlocked, isO
                 WebkitUserSelect: 'none'
               }}
             />
-            {/* Indicateur visuel discret - icône de main pour gratter */}
-            {!isToday && (
-              <div className="absolute bottom-2 right-2 z-25 pointer-events-none opacity-40">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
-                  <path d="M18 11v-1a2 2 0 0 0-2-2h-1M4 13h8a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-1a2 2 0 0 1 2-2z" />
-                  <path d="M13 10V9a2 2 0 0 0-2-2H9" />
-                  <path d="M4 10V9a2 2 0 0 1 2-2h2" />
-                </svg>
-              </div>
-            )}
+            {/* Removed discrete scratch-hand indicator as requested */}
           </>
         )}
 

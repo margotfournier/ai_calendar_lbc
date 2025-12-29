@@ -11,27 +11,27 @@ export const COLORS = {
 };
 
 const NOTION_AI_TIPS = [
-  "Lancement : principes de base et rassurer sur la sécurité",
+  "Launch: basics and security reassurance",
   "Enterprise search",
   "Research mode",
-  "AI Meeting notes",
-  "Exemple - Research mode sur une feature produit",
-  "Ask AI dans un paragraphe",
-  "Notion agent",
-  "Bloc d’IA",
+  "AI meeting notes",
+  "Example - Research mode on a product feature",
+  "Ask AI in a paragraph",
+  "Notion Agent",
+  "AI block",
   "Research mode example - PRD",
   "Databases: Create & Query",
-  "Databases: Update & pratique",
-  "Personnaliser son Agent Notion",
-  "Comment choisir le bon modèle?",
-  "Notion Agent UC 1: ranger des pages",
-  "Personnalisation Notion Agent 1",
-  "Raccourci clavier de l’IA de Notion",
-  "Notion Agent UC 2: Générer des Epics produit",
-  "Lecture de documents (connecteurs, pdf, image)",
-  "Traduire une page",
-  "Personnalisation Notion Agent 2",
-  "Wrap up: les outils IA chez HE"
+  "Databases: Update & practical tips",
+  "Customize your Notion Agent",
+  "How to choose the right model?",
+  "Notion Agent UC 1: organize pages",
+  "Notion Agent Personalization 1",
+  "Notion AI keyboard shortcut",
+  "Notion Agent UC 2: generate product epics",
+  "Document reading (connectors, PDF, images)",
+  "Translate a page",
+  "Notion Agent Personalization 2",
+  "Wrap up: AI tools at HE"
 ];
 
 // TARGET_YEAR and TARGET_MONTH are now provided via `public/days.yml`.

@@ -1,44 +1,44 @@
 # After-Calendar — January 2026
 
-Un petit projet React + Vite qui affiche un "after-calendar" interactif pour janvier 2026.
+A small React + Vite project that renders an interactive "after-calendar" for January 2026.
 
-Points clés
-- Chaque case du calendrier peut être "grattée" pour révéler du contenu (composant `ScratchReveal`).
-- Les cases de weekend affichent une illustration de fenêtre avec un animal endormi (`SleepingAnimal` / `WinterIllustration`).
-- Effets visuels : neige (`Snowfall`, rendu global en overlay), et feux d'artifice ajoutés pour le 1er janvier — rendus à l'intérieur du SVG de la fenêtre pour apparaître "à l'extérieur" (derrière les barreaux du cadre).
+Key points
+- Each calendar tile can be "scratched" to reveal content (component `ScratchReveal`).
+- Weekend tiles display a window illustration with a sleeping animal (`SleepingAnimal` / `WinterIllustration`).
+- Visual effects: snowfall (`Snowfall`, rendered as a global overlay) and fireworks added for January 1 — the fireworks are drawn inside the window SVG so they appear "outside" (behind the window frame).
 
-Installer et lancer
+Install and run
 
-Prérequis : Node.js (version moderne), npm
+Prerequisites: Node.js (modern), npm
 
-1. Installer les dépendances
+1. Install dependencies
 
 ```bash
 npm install
 ```
 
-2. Lancer le serveur de développement
+2. Start the dev server
 
 ```bash
 npm run dev
 ```
 
-3. Ouvrir l'app (généralement http://localhost:5173)
+3. Open the app (usually http://localhost:5173)
 
-Faits techniques
-- `Snowfall` est rendu globalement dans `App.tsx` comme un overlay fixe (`fixed inset-0`) — il crée des particules de neige qui tombent sur toute la page.
-- Les feux d'artifice ont été ajoutés dans `components/WinterIllustration.tsx` : ils sont dessinés dans le même SVG que le ciel et se situent avant les traits du cadre de la fenêtre, ce qui les fait apparaître "à l'extérieur" et derrière les barreaux.
-- Il y a aussi un composant `components/Fireworks.tsx` (overlay HTML/CSS) dans le projet — utile pour des explosions globales — mais pour obtenir l'effet "derrière les barreaux" on privilégie l'intégration SVG dans `WinterIllustration`.
+Technical notes
+- `Snowfall` is rendered globally in `App.tsx` as a fixed overlay (`fixed inset-0`) and generates snow particles across the page.
+- Fireworks are implemented in `components/WinterIllustration.tsx`: they are drawn in the same SVG as the sky and positioned before the window stroke so they visually appear outside the window frame.
+- There is also an optional `components/Fireworks.tsx` (HTML/CSS overlay) in the project — useful for full-screen explosions — but for the "behind the frame" effect the SVG integration is preferred.
 
-Personnalisation
-- Couleurs / positions des feux : modifiez `components/WinterIllustration.tsx` (groupes `.fw-bloom` / `.fw-spark`).
-- Si vous préférez des feux plus réalistes et performants pour de nombreuses particules, je peux remplacer l'implémentation SVG par un rendu canvas.
+Customization
+- To adjust colors/positions for the fireworks, edit `components/WinterIllustration.tsx` (groups `.fw-bloom` / `.fw-spark`).
+- If you want more realistic or performant fireworks for many particles, I can switch the SVG implementation to a canvas renderer.
 
-Besoin d'aide ?
-Si tu veux que je :
-- ajoute un son quand les feux explosent, ou
-- rende le composant paramétrable (couleurs, densité, s'il apparaît sur d'autres jours),
-je peux l'implémenter rapidement.
+Need help?
+If you want me to:
+- add sound when fireworks explode, or
+- make the component configurable (colors, density, show on other days),
+I can implement that quickly.
 
 ---
-Petit rappel : pour vérifier le typage TypeScript : `npx tsc --noEmit` — je l'ai exécuté après les changements et il n'y avait pas d'erreur.
+Note: to check TypeScript types run `npx tsc --noEmit`. I ran it after the changes and there were no type errors.

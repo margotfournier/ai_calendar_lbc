@@ -2,7 +2,7 @@ year: 2026
 month: 1
 days:
   - id: 2
-    title: "Notion AI is available !"
+    title: "Notion AI is available!"
     url: "https://www.notion.so/hymaia/Lancement-principes-de-base-et-rassurer-sur-la-s-curit-2d53b2bde8ad80e2a630e9d52e307f30?v=bccdda624c3f425b902c539daa951826&source=copy_link"
   - id: 5
     title: "Enterprise search"
@@ -14,7 +14,7 @@ days:
     title: "AI Meeting notes"
     url: "https://www.notion.so/product/ai"
   - id: 8
-    title: "Example !"
+    title: "Example - Research mode on a product feature"
     url: "https://www.notion.so/product/ai"
   - id: 9
     title: "Ask AI"
@@ -23,44 +23,44 @@ days:
     title: "Notion Agent"
     url: "https://www.notion.so/product/ai"
   - id: 13
-    title: "Bloc d’IA"
+    title: "AI block"
     url: "https://www.notion.so/product/ai"
   - id: 14
-    title: "Example"
+    title: "Research mode example - PRD"
     url: "https://www.notion.so/product/ai"
   - id: 15
     title: "Databases: Create & Query"
     url: "https://www.notion.so/product/ai"
   - id: 16
-    title: "Databases: Update & pratique"
+    title: "Databases: Update & practical tips"
     url: "https://www.notion.so/product/ai"
   - id: 19
-    title: "Personnaliser son Agent Notion"
+    title: "Customize your Notion Agent"
     url: "https://www.notion.so/product/ai"
   - id: 20
-    title: "Comment choisir le bon modèle?"
+    title: "How to choose the right model?"
     url: "https://www.notion.so/product/ai"
   - id: 21
-    title: "Notion Agent UC 1: ranger des pages"
+    title: "Notion Agent UC 1: organize pages"
     url: "https://www.notion.so/product/ai"
   - id: 22
-    title: "Personnalisation Notion Agent 1"
+    title: "Notion Agent Personalization 1"
     url: "https://www.notion.so/product/ai"
   - id: 23
-    title: "Raccourci clavier de l’IA de Notion"
+    title: "Notion AI keyboard shortcut"
     url: "https://www.notion.so/product/ai"
   - id: 26
-    title: "Notion Agent UC 2: Générer des Epics produit"
+    title: "Notion Agent UC 2: generate product epics"
     url: "https://www.notion.so/product/ai"
   - id: 27
-    title: "Lecture de documents (connecteurs, pdf, image)"
+    title: "Document reading (connectors, PDF, images)"
     url: "https://www.notion.so/product/ai"
   - id: 28
-    title: "Traduire une page"
+    title: "Translate a page"
     url: "https://www.notion.so/product/ai"
   - id: 29
-    title: "Personnalisation Notion Agent 2"
+    title: "Notion Agent Personalization 2"
     url: "https://www.notion.so/product/ai"
   - id: 30
-    title: "Wrap up: les outils IA chez HE"
+    title: "Wrap up: AI tools at HE"
     url: "https://www.notion.so/product/ai"
