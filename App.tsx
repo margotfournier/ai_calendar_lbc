@@ -85,6 +85,12 @@ const App: React.FC = () => {
             const available = isAvailable(day.day);
             const quietMode = isWeekendOrHoliday(TARGET_YEAR, TARGET_MONTH, day.day);
             const isToday = day.day === todayDate;
+            
+            // Calculer la semaine pour déterminer si c'est la nuit
+            const calendarRow = Math.floor((startOffset + day.day - 1) / 7);
+            const week = calendarRow + 1;
+            const isNight = week === 1 || week === 5;
+            const textColor = isNight ? 'text-white' : 'text-[#1d1d1f]';
 
             return (
               <div key={day.day} className="flex flex-col gap-4 group">
@@ -113,10 +119,7 @@ const App: React.FC = () => {
                     startOffset={startOffset}
                   >
                     <div className="flex flex-col items-center text-center w-full">
-                      <div className="w-10 h-10 mb-3 bg-slate-50 rounded-2xl flex items-center justify-center group-hover:bg-blue-50 transition-colors shadow-inner">
-                        <span className="text-lg">✨</span>
-                      </div>
-                      <h4 className="text-[11px] font-bold text-[#1d1d1f] mb-2 leading-tight px-1 line-clamp-3 min-h-[3rem] flex items-center justify-center">
+                      <h4 className={`text-[14px] font-bold ${textColor} mb-2 leading-tight px-1 line-clamp-3 min-h-[3rem] flex items-center justify-center`}>
                         {day.title}
                       </h4>
                       <button
@@ -124,7 +127,7 @@ const App: React.FC = () => {
                           e.stopPropagation();
                           window.open(day.notionUrl, '_blank');
                         }}
-                        className="w-auto px-4 py-2 bg-[#1d1d1f] hover:bg-black text-white text-[7px] font-black uppercase tracking-[0.2em] rounded-lg transition-all active:scale-[0.98] shadow-lg shadow-black/5 mt-1"
+                        className={`w-auto px-4 py-2 ${isNight ? 'bg-white/20 hover:bg-white/30 text-white border border-white/30' : 'bg-[#1d1d1f] hover:bg-black text-white'} text-[9px] font-black uppercase tracking-[0.2em] rounded-lg transition-all active:scale-[0.98] shadow-lg shadow-black/5 mt-1`}
                       >
                         Explore
                       </button>
