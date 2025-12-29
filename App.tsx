@@ -32,16 +32,19 @@ const App: React.FC = () => {
         <div className="animate-float mb-10">
            <div className="glass p-6 rounded-[3rem] shadow-xl shadow-blue-500/5 flex items-center gap-6">
              <div className="flex items-center">
-                <svg width="180" height="40" viewBox="0 0 450 100" className="h-10 w-auto">
-                   <text x="0" y="70" fontFamily="Arial, sans-serif" fontSize="60" fontWeight="bold" fill="#FBB000">h•me exchange</text>
-                </svg>
+                <img 
+                  src="/logos/HomeExchange_logo.png" 
+                  alt="HomeExchange" 
+                  className="h-10 w-auto object-contain"
+                />
              </div>
              <div className="h-12 w-[1.5px] bg-slate-200/50" />
              <div className="flex items-center">
-                <svg width="48" height="48" viewBox="0 0 100 100" className="w-10 h-10">
-                   <rect x="5" y="5" width="90" height="90" rx="15" fill="black" />
-                   <path d="M25 25 L35 25 L70 65 V25 H80 V75 H70 L35 35 V75 H25 V25 Z" fill="white" />
-                </svg>
+                <img 
+                  src="/logos/Notion-logo.svg.png" 
+                  alt="Notion" 
+                  className="w-10 h-10 object-contain"
+                />
              </div>
            </div>
         </div>
@@ -56,9 +59,9 @@ const App: React.FC = () => {
             January <span className="text-blue-600 font-extralight italic">2026</span>
           </h1>
           <p className="text-[#86868b] text-xl font-light max-w-2xl mx-auto pt-6 leading-relaxed">
-            Un nouveau secret Notion AI chaque jour.
+            Un calendrier de l'après pour découvrir les features de Notion AI un peu tous les jours.
             <br />
-            <span className="text-sm font-medium text-slate-400 mt-2 block italic">Découvrez de nouveaux animaux chaque semaine à votre fenêtre.</span>
+            <span className="text-sm font-medium text-slate-400 mt-2 block italic">Prolongez le plaisir des fêtes en explorant de nouvelles fonctionnalités chaque jour.</span>
           </p>
         </div>
       </header>
@@ -135,10 +138,12 @@ const App: React.FC = () => {
       <footer className="fixed bottom-12 z-50">
         <div className="glass px-10 py-5 rounded-[2.5rem] shadow-2xl flex items-center gap-12 border border-white/50">
           <div className="flex items-center gap-5">
-             <div className="w-10 h-10 rounded-xl bg-black flex items-center justify-center shadow-lg">
-                <svg width="24" height="24" viewBox="0 0 100 100">
-                   <path d="M25 25 L35 25 L70 65 V25 H80 V75 H70 L35 35 V75 H25 V25 Z" fill="white" />
-                </svg>
+             <div className="w-10 h-10 rounded-xl bg-black flex items-center justify-center shadow-lg p-2">
+                <img 
+                  src="/logos/Notion-logo.svg.png" 
+                  alt="Notion" 
+                  className="w-full h-full object-contain"
+                />
              </div>
              <div className="flex flex-col">
                 <span className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400">HomeExchange</span>
