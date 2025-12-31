@@ -1,44 +1,57 @@
 # After-Calendar — January 2026
 
-A small React + Vite project that renders an interactive "after-calendar" for January 2026.
+This is a small React + Vite application that renders an interactive “after-calendar” for January 2026. Each day tile can be scratched off to reveal bespoke content (see `ScratchReveal`), weekend cells show a cozy window illustration with a sleeping animal, and snow/firworks effects are handled globally through the `Snowfall` overlay and `WinterIllustration` component so that the scene always feels cinematic.
 
-Key points
-- Each calendar tile can be "scratched" to reveal content (component `ScratchReveal`).
-- Weekend tiles display a window illustration with a sleeping animal (`SleepingAnimal` / `WinterIllustration`).
-- Visual effects: snowfall (`Snowfall`, rendered as a global overlay) and fireworks added for January 1 — the fireworks are drawn inside the window SVG so they appear "outside" (behind the window frame).
+## Build & preview
 
-Install and run
+1. Install dependencies (only needed once or when you change `package.json`):
 
-Prerequisites: Node.js (modern), npm
+   ```bash
+   npm install
+   ```
 
-1. Install dependencies
+2. Build the production bundle:
 
-```bash
-npm install
-```
+   ```bash
+   npm run build
+   ```
 
-2. Start the dev server
+   This emits `dist/` with all assets wired to the `/ai_calendar/` base path defined in `vite.config.ts`.
 
-```bash
-npm run dev
-```
+3. Preview the production build locally:
 
-3. Open the app (usually http://localhost:5173)
+   ```bash
+   npm run preview
+   ```
 
-Technical notes
-- `Snowfall` is rendered globally in `App.tsx` as a fixed overlay (`fixed inset-0`) and generates snow particles across the page.
-- Fireworks are implemented in `components/WinterIllustration.tsx`: they are drawn in the same SVG as the sky and positioned before the window stroke so they visually appear outside the window frame.
-- There is also an optional `components/Fireworks.tsx` (HTML/CSS overlay) in the project — useful for full-screen explosions — but for the "behind the frame" effect the SVG integration is preferred.
+   Vite’s preview server respects the `base` setting, so you can verify the exact behavior that will ship to GitHub Pages.
 
-Customization
-- To adjust colors/positions for the fireworks, edit `components/WinterIllustration.tsx` (groups `.fw-bloom` / `.fw-spark`).
-- If you want more realistic or performant fireworks for many particles, I can switch the SVG implementation to a canvas renderer.
+## Updating GitHub Pages manually
 
-Need help?
-If you want me to:
-- add sound when fireworks explode, or
-- make the component configurable (colors, density, show on other days),
-I can implement that quickly.
+A workflow pushes `dist/` to the `gh-pages` branch on every `main` push (`.github/workflows/gh-pages.yml`). If that workflow fails or you want to deploy manually:
 
----
-Note: to check TypeScript types run `npx tsc --noEmit`. I ran it after the changes and there were no type errors.
+1. Run the build again:
+
+   ```bash
+   npm run build
+   ```
+
+2. Push the current `dist/` into `gh-pages` using the `gh-pages` package shipped in `package.json`. If you need to copy files manually (when the workflow fails), run:
+
+   ```bash
+   npm run build
+   git fetch origin gh-pages
+   git checkout gh-pages
+   rm -rf ./*
+   cp -R dist/. .
+   git add .
+   git commit -m "deploy dist"
+   git push origin gh-pages
+   git checkout main
+   ```
+
+   That script publishes `dist/` to the `gh-pages` branch with the `/ai_calendar/` base intact.
+
+3. Confirm the live site at `https://hymaia.github.io/ai_calendar/`.
+
+If you still see stale content, run `git fetch origin gh-pages && git checkout gh-pages` to inspect the branch, then merge or fast-forward it to match the latest `dist/` before pushing again.
