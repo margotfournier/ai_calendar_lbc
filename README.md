@@ -55,3 +55,22 @@ A workflow pushes `dist/` to the `gh-pages` branch on every `main` push (`.githu
 3. Confirm the live site at `https://hymaia.github.io/ai_calendar/`.
 
 If you still see stale content, run `git fetch origin gh-pages && git checkout gh-pages` to inspect the branch, then merge or fast-forward it to match the latest `dist/` before pushing again.
+
+## Updating day tiles and URLs
+
+Each tile is mapped from `public/days.yml`; edit that file whenever you want to change the title/URL shown for a specific date. The YAML is structured as:
+
+```yaml
+year: 2025
+month: 12
+days:
+  - id: 2
+    title: "Chat GPT features are available!"
+    url: "https://example.com/your-link"
+```
+How to write `public/days.yml`:
+- `id` must be the calendar day number, 
+- `title` becomes the tile headline, and 
+- `url` is optional—the existing scratch card components will automatically link to it. 
+
+After editing, rebuild (`npm run build`) so the updated tiles ship with the new deploy.
