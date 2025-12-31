@@ -1,0 +1,66 @@
+year: 2025
+month: 12
+days:
+  - id: 2
+    title: "Lancement : Principes de base et sécurité des données"
+    url: "https://openai.com/security/"
+  - id: 5
+    title: "SearchGPT : La recherche web en temps réel"
+    url: "https://openai.com/index/introducing-chatgpt-search/"
+  - id: 6
+    title: "Deep Research : Analyses approfondies"
+    url: "https://openai.com/index/introducing-deep-research/"
+  - id: 7
+    title: "Advanced Voice Mode : Interactions naturelles"
+    url: "https://openai.com/index/advanced-voice-mode-rolling-out/"
+  - id: 8
+    title: "Exemples d'utilisation du Deep Research"
+    url: "https://openai.com/news/"
+  - id: 9
+    title: "Le modèle de raisonnement o1 (OpenAI o1)"
+    url: "https://openai.com/index/introducing-openai-o1-preview/"
+  - id: 12
+    title: "Explorer le GPT Store"
+    url: "https://chatgpt.com/gpts"
+  - id: 13
+    title: "Introduction à Canvas"
+    url: "https://openai.com/index/introducing-canvas/"
+  - id: 14
+    title: "Utiliser Canvas pour l'écriture de documents"
+    url: "https://openai.com/index/introducing-canvas/"
+  - id: 15
+    title: "ChatGPT Projects : Guide de démarrage"
+    url: "https://help.openai.com/en/articles/10169521-using-projects-in-chatgpt"
+  - id: 16
+    title: "Gérer la base de connaissances des Projets"
+    url: "https://help.openai.com/en/articles/10169521-using-projects-in-chatgpt"
+  - id: 19
+    title: "Configurer les Custom Instructions"
+    url: "https://help.openai.com/en/articles/8083517-custom-instructions-for-chatgpt"
+  - id: 20
+    title: "Comparatif des forfaits et modèles"
+    url: "https://openai.com/chatgpt/pricing/"
+  - id: 21
+    title: "Découvrir des GPTs productivité"
+    url: "https://chatgpt.com/gpts"
+  - id: 22
+    title: "Guide officiel du Prompt Engineering"
+    url: "https://platform.openai.com/docs/guides/prompt-engineering"
+  - id: 23
+    title: "ChatGPT pour Desktop (Mac & Windows)"
+    url: "https://openai.com/chatgpt/desktop/"
+  - id: 26
+    title: "Utiliser les Projets pour le Product Management"
+    url: "https://help.openai.com/en/articles/10169521-using-projects-in-chatgpt"
+  - id: 27
+    title: "Connecteurs Google Drive et OneDrive"
+    url: "https://help.openai.com/en/articles/9239633-google-drive-and-microsoft-onedrive-connectors-on-chatgpt"
+  - id: 28
+    title: "Analyse de données et vision (GPT-4o)"
+    url: "https://openai.com/index/gpt-4o-and-more-tools-to-chatgpt-free/"
+  - id: 29
+    title: "Personnalisation et mémoire de ChatGPT"
+    url: "https://help.openai.com/en/articles/8083517-custom-instructions-for-chatgpt"
+  - id: 30
+    title: "Dernières nouveautés OpenAI"
+    url: "https://openai.com/news/"
