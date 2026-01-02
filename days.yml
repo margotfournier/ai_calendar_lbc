@@ -1,12 +1,9 @@
 year: 2026
 month: 1
 days:
-  - id: 2
-    title: "Lancement : Principes de base et sécurité des données"
-    url: "https://openai.com/security/"
   - id: 5
-    title: "SearchGPT : La recherche web en temps réel"
-    url: "https://openai.com/index/introducing-chatgpt-search/"
+    title: "Créer son premier Projet thématique"
+    url: "https://docs.google.com/document/u/0/d/18Fq0Q7JkAtag40wwZW34N0goTzt4ETzWqqcAycPQIMw/edit"
   - id: 6
     title: "Deep Research : Analyses approfondies"
     url: "https://openai.com/index/introducing-deep-research/"
