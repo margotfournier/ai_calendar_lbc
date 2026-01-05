@@ -69,7 +69,7 @@ year: 2025
 month: 12
 days:
   - id: 2
-    title: "Chat GPT features are available!"
+    title: "AI highlights are available!"
     url: "https://example.com/your-link"
 ```
 How to write `public/days.yml`:

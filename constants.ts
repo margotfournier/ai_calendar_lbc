@@ -10,27 +10,27 @@ export const COLORS = {
   TEXT_SECONDARY: '#86868b'
 };
 
-const CHAT_GPT_FEATURES_TIPS = [
+const AI_FEATURE_TIPS = [
   "Launch: basics and security reassurance",
   "Enterprise search",
   "Research mode",
   "AI meeting notes",
   "Example - Research mode on a product feature",
   "Ask AI in a paragraph",
-  "Chat GPT features Agent",
+  "AI copilot agent",
   "AI block",
   "Research mode example - PRD",
   "Databases: Create & Query",
   "Databases: Update & practical tips",
-  "Customize your Chat GPT features Agent",
+  "Customize your AI copilot",
   "How to choose the right model?",
-  "Chat GPT features Agent UC 1: organize pages",
-  "Chat GPT features Agent Personalization 1",
-  "Chat GPT features AI keyboard shortcut",
-  "Chat GPT features Agent UC 2: generate product epics",
+  "AI copilot UC 1: organize pages",
+  "AI copilot personalization 1",
+  "AI keyboard shortcut",
+  "AI copilot UC 2: generate product epics",
   "Document reading (connectors, PDF, images)",
   "Translate a page",
-  "Chat GPT features Agent Personalization 2",
+  "AI copilot personalization 2",
   "Wrap up: AI tools at HE"
 ];
 
@@ -39,7 +39,7 @@ const CHAT_GPT_FEATURES_TIPS = [
 
 export const CALENDAR_DAYS: DayData[] = Array.from({ length: 31 }, (_, i) => ({
   day: i + 1,
-  title: CHAT_GPT_FEATURES_TIPS[i] || "Chat GPT features Tip",
+  title: AI_FEATURE_TIPS[i] || "AI feature tip",
   description: "Advanced AI techniques for the modern LeBonCoiner.",
   notionUrl: "",
   isUnlocked: false,
